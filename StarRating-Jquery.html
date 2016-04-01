@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <style>
+		.star-ctr {
+		    display: inline-block;
+		    position: relative;
+		}
+		
+		.star-ctr ul {
+		    white-space: nowrap;
+		    list-style: none outside none;
+		    padding-left: 0;
+		    overflow: hidden;
+		}
+		
+		.star-fg {
+		    top: 0;
+		    position: absolute;
+		}
+		
+		.star-ctr li {
+		    display: inline-block;
+		}
+		
+		.star-ctr a > span {
+		    font-size: 3em;
+		}
+		
+		.star-bg a > span {
+		    color: silver
+		}
+		
+		.star-fg a > span {
+		    color: brown;
+		}
+    </style>
+  </head>
+<body>
+	<div style="margin: 10px">
+	<h2>STAR RATING</h2>
+	<h4>Mouse over on Stars and click it</h4>
+	<div class="star-ctr">
+	  <ul>
+	    <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	    <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	    <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	    <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	    <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	  </ul>
+	</div>
+	</div>
+	
+	<script>
+	   var $me = $( '.star-ctr' );
+
+	   var $bg, $fg, wd, cc, ini;
+
+	   $bg = $me.children( 'ul' );
+	   $fg = $bg.clone().addClass( 'star-fg' ).css( 'width', 0 ).appendTo( $me );
+	   $bg.addClass( 'star-bg' );
+
+	   function initialize() {
+
+	      ini = true;
+
+	      // How many rating elements
+	      cc = $bg.children().length;
+
+	      // Total width of the bar
+	      wd = $bg.width();
+
+	   }
+
+	   $me.mousemove(function( e ) {
+	      
+	      // Do once, deferred since fonts might not
+	      // be loaded so the calcs will be wrong
+	      if ( !ini ) initialize();
+
+	      var dt, vl;
+
+	      // Where is the mouse relative to the left
+	      // side of the bar?
+	      dt = e.pageX - $me.offset().left;
+	      vl = Math.round( dt / wd * cc * 10 ) / 10;
+
+	      $me.attr( 'data-value', vl );
+	      $fg.css( 'width', Math.round( dt )+'px' );
+
+	   }).click(function() {
+
+	       // Grab value
+	       alert( $( this ).attr( 'data-value' ) );
+
+	       return false;
+	   });
+	</script>
+</body>
+</html>
