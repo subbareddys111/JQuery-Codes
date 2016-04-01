@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <style>
+		#gallery_viewport {
+		    overflow: hidden;
+		    width: 306px;
+		    height: 340px;    
+		    min-width: 306px;
+		    min-height: 340px;
+		    margin: 20px;
+		    background-repeat: no-repeat;
+		}
+		
+		#gallery_image {
+		    position: relative;
+		    height: 306px;    
+		    min-height: 306px;
+		    background-repeat: no-repeat;
+		}
+		
+		.tiled_image {
+		    display: inline;
+		    float: left;
+		    width: 306px;
+		    height: 306px;
+		}
+		
+		.buttons {
+		    -moz-border-radius: 5px;
+		    -webkit-border-radius: 5px;
+		    border-radius: 5px;
+		    background-color: #ff9900;
+		    color: black;
+		    text-align: center;
+		    cursor: pointer;
+		    -webkit-touch-callout: none;
+		    -webkit-user-select: none;
+		    -khtml-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		}
+		
+		#previous {
+		    float: left;
+		    width: 90px;
+		    margin: 10px 10px 0 80px;
+		}
+		
+		#next {
+		    float: left;
+		    width: 90px;
+		    margin: 10px 0 0 0;
+		}
+	</style>
+  </head>
+  <body>
+	<div id="gallery_viewport">
+	     <div id="gallery_image"></div>
+	     <div class="buttons" id="previous">Previous</div>
+	     <div class="buttons" id="next">Next</div>
+	</div>
+	<script>
+	// jQuery image gallery
+
+	$(document).ready(function() {
+	    
+	    // gallery data potentially arriving from an AJAX call...
+	    var imageLibraryData = [
+	        "http://images.chinahighlights.com/2014/03/the-great-wallc513dc78bc6f_cp_679x452.jpg",
+	        "http://hotlyspiced.com/wp-content/uploads/2015/06/15.06.07.8jpg.jpg",
+	        "http://travelchannel.sndimg.com/content/dam/images/travel/fullset/2015/10/12/new-seven-wonders-christ-the-redeemer.jpg.rend.tccom.616.462.jpeg",
+	        "http://www.visapk.com/wp-content/uploads/2014/11/Oblique-Tower-of-Pisa.jpg",
+	        "http://www.travelchannel.com/content/dam/images/travel/fullset/2011/09/09/cd/seven-wonders-of-the-world.rend.tccom.616.462.jpeg"
+	        ];
+
+	    var currentImageIndex = 0;
+	    var imageWidth = 306;
+	    var imageLibraryCount = imageLibraryData.length;
+	    var imageStripWidth = imageWidth * imageLibraryCount;
+	    
+	    // setup width of gallery image strip
+	    //
+	    $('#gallery_image')
+	        .css('width', imageStripWidth)
+	        .css('min-width', imageStripWidth);
+	    
+	    // load images and tile them.
+	    //
+	    for (var i = 0; i < imageLibraryCount; i++) {
+	        $('#gallery_image').append('<img class="tiled_image" src="' + imageLibraryData[i] + '" />');
+	    }
+	    
+	    // setup jQuery events for button clicks
+	    //
+	    $('#next').click(function() {
+	        currentImageIndex++;
+	        if (currentImageIndex > imageLibraryCount - 1) {
+	            currentImageIndex = imageLibraryCount - 1;
+	        } else {
+	            $("#gallery_image").animate({"left": "-=" + imageWidth}, "fast");
+	        }        
+	    });
+	    $('#previous').click(function() {        
+	        currentImageIndex--;
+	        if (currentImageIndex < 0) {
+	            currentImageIndex = 0;
+	        } else {
+	            $("#gallery_image").animate({"left": "+=" + imageWidth}, "fast");
+	        }            
+	    });
+	  });
+	</script>
+  </body>
+</html>
